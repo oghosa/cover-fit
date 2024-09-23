@@ -1,48 +1,54 @@
-import { useState } from 'react';
+import React from 'react';
 
 export default function PlansTable({ plans }) {
-  console.log('PlansTable received plans:', plans);
-
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
-
-  const sortedPlans = [...plans].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
-      return sortConfig.direction === 'ascending' ? -1 : 1;
-    }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
-      return sortConfig.direction === 'ascending' ? 1 : -1;
-    }
-    return 0;
-  });
-
-  const requestSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-    setSortConfig({ key, direction });
-  };
-
   return (
-    <table className="min-w-full bg-white">
-      <thead>
-        <tr>
-          <th onClick={() => requestSort('hmo')} className="cursor-pointer">HMO</th>
-          <th onClick={() => requestSort('plan')} className="cursor-pointer">Plan</th>
-          <th onClick={() => requestSort('priceRange')} className="cursor-pointer">Price Range</th>
-          <th>Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        {sortedPlans.map((plan) => (
-          <tr key={plan.id}>
-            <td>{plan.hmo}</td>
-            <td>{plan.plan}</td>
-            <td>{plan.priceRange}</td>
-            <td>{plan.details}</td>
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              HMO Name
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Plan Name
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Annual Cost (Naira)
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Plan Link
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {plans.map((plan, index) => (
+            <tr key={index}>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {plan.hmo_name}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {plan.plan_name_full}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {plan.plan_annual_cost_naira}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <a 
+                  href={plan.plan_link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  View Plan
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="mt-4 text-right text-gray-600">
+        Total results: {plans.length}
+      </div>
+    </div>
   );
 }
