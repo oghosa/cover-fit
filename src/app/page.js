@@ -76,10 +76,12 @@ export default function Home() {
 
   console.log("Home: isLoading is false, rendering content");
   return (
-    <div>
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4 text-center">Compare Health Insurance Plans</h1>
       <FilterForm onFilter={setFilters} filterOptions={filterOptions} />
       <PlansTable plans={plans} />
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+      <div className="text-center mb-4">Total Results: {totalCount}</div>
     </div>
   );
 }

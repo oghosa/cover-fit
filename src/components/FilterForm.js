@@ -57,7 +57,7 @@ export default function FilterForm({ onFilter, filterOptions = {} }) {
         <label className="block text-gray-700 font-bold mb-2">{label}</label>
         <div className="checkbox-group" style={{ maxHeight: '150px', overflowY: 'auto', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
           {options.map((option, index) => (
-            <div key={index} className="flex items-center mb-1" style={{ marginRight: '2px', marginBottom: '0px' }}>
+            <div key={index} className="flex items-center mb-1" style={{ marginRight: '2px', marginBottom: '-1px' }}>
               <input
                 type="checkbox"
                 name={name}
@@ -75,7 +75,7 @@ export default function FilterForm({ onFilter, filterOptions = {} }) {
   };
 
   return (
-    <div className="mb-4">
+    <div className="p-8">
       <form onSubmit={handleSubmit} className="filter-form" style={{ display: 'flex', flexDirection: 'column' }}>
         <div className="filter-options" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
           {renderCheckboxGroup('hmo_name', filterOptions.hmos, 'HMO Name')}
