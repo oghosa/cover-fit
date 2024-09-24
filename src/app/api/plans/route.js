@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
 export async function GET(request) {
+  console.log('API: Received plans request');
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get('page') || '1', 10);
   const limit = parseInt(searchParams.get('limit') || '10', 10);
@@ -20,7 +21,7 @@ export async function GET(request) {
     let whereClause = [];
     let params = [];
     if (hmo_name.length > 0) {
-      whereClause.push(`LOWER(hmo_name) IN (${hmo_name.map((_, i) => `LOWER($${params.length + i + 1})`).join(', ')})`);
+      whereClause.push(`hmo_name IN (${hmo_name.map((_, i) => `$${params.length + i + 1}`).join(', ')})`);
       params.push(...hmo_name);
     }
     if (plan_price_range.length > 0) {
@@ -39,11 +40,14 @@ export async function GET(request) {
     const whereClauseString = whereClause.length > 0 ? `WHERE ${whereClause.join(' AND ')}` : '';
 
     const query = `
-      SELECT * FROM plans
+      SELECT *
+      FROM plans
       ${whereClauseString}
-      ORDER BY Plan_id
+      ORDER BY plan_id
       LIMIT $${params.length + 1} OFFSET $${params.length + 2}
     `;
+
+    params.push(limit, offset); // Add limit and offset to the params array
 
     console.log('API - Executing query:', query);
     console.log('API - Query parameters:', params);
@@ -55,7 +59,7 @@ export async function GET(request) {
       SELECT COUNT(*) FROM plans
       ${whereClauseString}
     `;
-    const countResult = await sql.query(countQuery, params);
+    const countResult = await sql.query(countQuery, params.slice(0, -2)); // Use the same params except limit and offset
     const totalCount = parseInt(countResult.rows[0].count, 10);
     const totalPages = Math.ceil(totalCount / limit);
 
@@ -64,6 +68,6 @@ export async function GET(request) {
     return NextResponse.json({ plans: result.rows, totalCount, totalPages });
   } catch (error) {
     console.error('API - Error fetching plans:', error);
-    return NextResponse.json({ error: 'Failed to fetch plans' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch plans', details: error.message }, { status: 500 });
   }
 }
