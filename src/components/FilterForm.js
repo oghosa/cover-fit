@@ -53,20 +53,21 @@ export default function FilterForm({ onFilter, filterOptions = {} }) {
       return null;
     }
     return (
-      <div className="filter-group" style={{ flex: '1 1 200px', minWidth: '200px', marginBottom: '20px' }}>
-        <label className="block text-gray-700 font-bold mb-2">{label}</label>
-        <div className="checkbox-group" style={{ maxHeight: '150px', overflowY: 'auto', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+      <div>
+        <h2 className="font-semibold mb-2">{label}</h2>
+        <div className="checkbox-group h-40 overflow-y-auto">
           {options.map((option, index) => (
-            <div key={index} className="flex items-center mb-1" style={{ marginRight: '2px', marginBottom: '-1px' }}>
+            <div key={index} className="flex items-center mb-2">
               <input
                 type="checkbox"
+                id={`${name}-${index}`}
                 name={name}
                 value={option}
                 checked={filters[name].includes(option)}
                 onChange={handleChange}
                 className="mr-2"
               />
-              <label>{option}</label>
+              <label htmlFor={`${name}-${index}`} className="text-sm">{option}</label>
             </div>
           ))}
         </div>
@@ -75,19 +76,21 @@ export default function FilterForm({ onFilter, filterOptions = {} }) {
   };
 
   return (
-    <div className="p-8">
-      <form onSubmit={handleSubmit} className="filter-form" style={{ display: 'flex', flexDirection: 'column' }}>
-        <div className="filter-options" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          {renderCheckboxGroup('hmo_name', filterOptions.hmos, 'HMO Name')}
-          {renderCheckboxGroup('plan_price_range', filterOptions.priceRanges, 'Plan Price Range')}
-          {renderCheckboxGroup('plan_type', filterOptions.planTypes, 'Plan Type')}
-          {renderCheckboxGroup('plan_name', filterOptions.planNames, 'Plan Name')}
-        </div>
-        <div className="mt-4 flex justify-center" style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-          <button type="submit" className="mr-2 px-4 py-2 bg-blue-500 text-white rounded">Compare Plans</button>
-          <button type="button" onClick={clearFilters} className="px-4 py-2 bg-gray-500 text-white rounded">Clear Filters</button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="filter-form">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {renderCheckboxGroup('hmo_name', filterOptions.hmos, 'HMO Name')}
+        {renderCheckboxGroup('plan_price_range', filterOptions.priceRanges, 'Plan Price Range')}
+        {renderCheckboxGroup('plan_type', filterOptions.planTypes, 'Plan Type')}
+        {renderCheckboxGroup('plan_name', filterOptions.planNames, 'Plan Name')}
+      </div>
+      <div className="flex justify-center space-x-4">
+        <button type="submit" className="bg-[#008751] text-white px-4 py-2 rounded hover:bg-[#006741] transition-colors">
+          Compare Plans
+        </button>
+        <button type="button" onClick={clearFilters} className="border border-[#008751] text-[#008751] px-4 py-2 rounded hover:bg-[#008751] hover:text-white transition-colors">
+          Clear Filters
+        </button>
+      </div>
+    </form>
   );
 }

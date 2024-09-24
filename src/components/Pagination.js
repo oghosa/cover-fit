@@ -1,23 +1,23 @@
+import { Button } from "@/components/ui/button"
+
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
     return (
-      <div className="flex justify-center mt-4">
-        <button
+      <div className="flex justify-between items-center mt-4">
+        <Button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-4 py-2 mr-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+          className="bg-[#008751] text-white hover:bg-[#006741]"
         >
           Previous
-        </button>
-        <span className="px-4 py-2">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
+        </Button>
+        <span>Page {currentPage} of {totalPages}</span>
+        <Button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 ml-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+          className="bg-[#008751] text-white hover:bg-[#006741]"
         >
           Next
-        </button>
+        </Button>
       </div>
     );
-  }
+}

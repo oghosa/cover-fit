@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import FilterForm from '../components/FilterForm';
 import PlansTable from '../components/PlansTable';
 import Pagination from '../components/Pagination';
+import { UserCircle, FileSearch } from 'lucide-react';
 
 export default function Home() {
   const [plans, setPlans] = useState([]);
@@ -71,17 +72,37 @@ export default function Home() {
 
   if (isLoading) {
     console.log("Home: isLoading is true, rendering loading message");
-    return <div>Loading Filter options...</div>;
+    return <div className="flex items-center justify-center min-h-screen">Loading Filter options...</div>;
   }
 
   console.log("Home: isLoading is false, rendering content");
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4 text-center">Compare Health Insurance Plans</h1>
-      <FilterForm onFilter={setFilters} filterOptions={filterOptions} />
-      <PlansTable plans={plans} />
-      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-      <div className="text-center mb-4">Total Results: {totalCount}</div>
+    <div className="min-h-screen bg-[#F7F7F7]">
+      <header className="bg-[#008751] text-white p-4 flex justify-between items-center">
+        <div className="flex items-center">
+          <span className="text-2xl font-bold">CoverFit</span>
+        </div>
+        <div className="flex items-center">
+          <span className="mr-2">John Doe</span>
+          <UserCircle size={32} />
+        </div>
+      </header>
+      <main className="container mx-auto p-4">
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-bold text-[#008751]">Compare Health Insurance Plans</h1>
+          <FileSearch size={32} className="text-[#008751]" />
+        </div>
+        <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+          <FilterForm onFilter={setFilters} filterOptions={filterOptions} />
+        </div>
+        <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+          <PlansTable plans={plans} />
+          <div className="mt-4 text-center text-gray-600">
+            Total Results: {totalCount}
+          </div>
+        </div>
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+      </main>
     </div>
   );
 }
