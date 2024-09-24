@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    console.log('Fetching filter options...');
+    console.log('API: Fetching filter options...');
     
     const columns = ['hmo_name', 'plan_price_range', 'plan_type', 'plan_name'];
     const filterOptions = {
@@ -15,7 +15,7 @@ export async function GET() {
 
     for (const column of columns) {
       try {
-        console.log(`Fetching distinct values for ${column}...`);
+        console.log(`API: Fetching distinct values for ${column}...`);
         const query = `
           SELECT DISTINCT "${column}"
           FROM plans 
@@ -24,7 +24,7 @@ export async function GET() {
           LIMIT 50
         `;
         const result = await sql.query(query);
-        console.log(`Result for ${column}:`, result);
+        console.log(`API: Result for ${column}:`, JSON.stringify(result.rows, null, 2));
         
         switch(column) {
           case 'hmo_name':
@@ -41,18 +41,15 @@ export async function GET() {
             break;
         }
       } catch (columnError) {
-        console.error(`Error fetching distinct values for ${column}:`, columnError);
+        console.error(`API: Error fetching distinct values for ${column}:`, columnError);
       }
     }
 
-    console.log('Filter options:', filterOptions);
+    console.log('API: Final filter options:', JSON.stringify(filterOptions, null, 2));
     return NextResponse.json(filterOptions);
   } catch (error) {
-    console.error('Error in filter options route:', error);
-    return NextResponse.json({ 
-      error: `Failed to fetch filter options: ${error.message}`,
-      stack: error.stack
-    }, { status: 500 });
+    console.error('API: Error fetching filter options:', error);
+    return NextResponse.json({ error: 'Failed to fetch filter options' }, { status: 500 });
   }
 }
 
