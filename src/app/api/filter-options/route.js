@@ -21,7 +21,7 @@ export async function GET() {
           FROM plans 
           WHERE "${column}" IS NOT NULL AND "${column}" != ''
           ORDER BY "${column}"
-          LIMIT 50
+          LIMIT 100
         `;
         const result = await sql.query(query);
         console.log(`API: Result for ${column}:`, JSON.stringify(result.rows, null, 2));
