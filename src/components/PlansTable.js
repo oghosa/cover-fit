@@ -16,6 +16,9 @@ export default function PlansTable({ plans }) {
               HMO Name
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Plan Type
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Plan Name
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -30,7 +33,8 @@ export default function PlansTable({ plans }) {
           {plans.map((plan, index) => (
             <tr key={index}>
               <td className="px-6 py-4 whitespace-nowrap">{plan.hmo_name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{plan.plan_name_full}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{plan.plan_type}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{plan.plan_name}</td>
               <td className="px-6 py-4 whitespace-nowrap">{plan.plan_annual_cost_naira}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <a 

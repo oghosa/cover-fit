@@ -11,58 +11,75 @@ export default function Home() {
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [filters, setFilters] = useState({});
+  const [filterOptions, setFilterOptions] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchPlans();
-  }, [currentPage, filters]);
+  const fetchFilterOptions = async () => {
+    try {
+      console.log("Home: Fetching filter options...");
+      const response = await fetch('/api/filter-options');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("Home: Received filter options:", JSON.stringify(data, null, 2));
+      setFilterOptions(data);
+    } catch (error) {
+      console.error("Home: Error fetching filter options:", error);
+    }
+  };
 
   const fetchPlans = async () => {
-    console.log("Fetching plans with filters:", filters);
-    const queryParams = new URLSearchParams({
-      page: currentPage.toString(),
-      limit: '10',
-      ...filters
-    });
-    const url = `/api/plans?${queryParams}`;
-    console.log("Requesting URL:", url);
     try {
+      console.log("Home: Fetching plans with filters:", JSON.stringify(filters, null, 2));
+      const queryParams = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: '10',
+        ...filters
+      });
+      const url = `/api/plans?${queryParams}`;
+      console.log("Home: Fetching plans with URL:", url);
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log("Received data:", JSON.stringify(data, null, 2));
+      console.log("Home: Received plans data:", JSON.stringify(data, null, 2));
       setPlans(data.plans);
       setTotalPages(data.totalPages);
       setTotalCount(data.totalCount);
     } catch (error) {
-      console.error("Error fetching plans:", error);
+      console.error("Home: Error fetching plans:", error);
     }
   };
 
-  const handleFilter = (newFilters) => {
-    console.log("Applying new filters:", newFilters);
-    setFilters(newFilters);
-    setCurrentPage(1); // Reset to first page when applying new filters
-  };
+  useEffect(() => {
+    console.log("Home: Component mounted, fetching filter options and plans...");
+    const fetchData = async () => {
+      await fetchFilterOptions();
+      await fetchPlans();
+      console.log("Home: Setting isLoading to false");
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
+  useEffect(() => {
+    console.log("Home: Fetching plans due to page or filter change");
+    fetchPlans();
+  }, [currentPage, filters]);
 
+  if (isLoading) {
+    console.log("Home: isLoading is true, rendering loading message");
+    return <div>Loading Filter options...</div>;
+  }
+
+  console.log("Home: isLoading is false, rendering content");
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">Health Insurance Plans</h1>
-      <FilterForm onFilter={handleFilter} />
+    <div>
+      <FilterForm onFilter={setFilters} filterOptions={filterOptions} />
       <PlansTable plans={plans} />
-      <Pagination 
-        currentPage={currentPage} 
-        totalPages={totalPages} 
-        onPageChange={handlePageChange} 
-      />
-      <div className="mt-4 text-center text-gray-600">
-        Total results: {totalCount}
-      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
     </div>
   );
 }

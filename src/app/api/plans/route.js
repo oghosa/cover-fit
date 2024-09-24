@@ -14,6 +14,8 @@ export async function GET(request) {
   const plan_type = searchParams.get('plan_type')?.split(',') || [];
   const plan_name_full = searchParams.get('plan_name_full')?.split(',') || [];
 
+  const plan_name = searchParams.get('plan_name')?.split(',') || [];
+
   console.log('API - Received request with params:', JSON.stringify({ page, limit, hmo_name, plan_price_range, plan_type, plan_name_full }, null, 2));
 
   try {
@@ -35,6 +37,10 @@ export async function GET(request) {
     if (plan_name_full.length > 0) {
       whereClause.push(`plan_name_full IN (${plan_name_full.map((_, i) => `$${params.length + i + 1}`).join(', ')})`);
       params.push(...plan_name_full);
+    }
+    if (plan_name.length > 0) {
+      whereClause.push(`plan_name IN (${plan_name.map((_, i) => `$${params.length + i + 1}`).join(', ')})`);
+      params.push(...plan_name);
     }
 
     const whereClauseString = whereClause.length > 0 ? `WHERE ${whereClause.join(' AND ')}` : '';
