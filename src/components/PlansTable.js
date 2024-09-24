@@ -1,6 +1,12 @@
 import React from 'react';
 
 export default function PlansTable({ plans }) {
+  console.log("Rendering plans:", plans.map(plan => ({
+    hmo_name: plan.hmo_name,
+    plan_name_full: plan.plan_name_full,
+    plan_type: plan.plan_type
+  })));
+  
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">

@@ -46,7 +46,14 @@ export default function FilterForm({ onFilter }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onFilter(filters);
+    const newFilters = {};
+    Object.keys(filters).forEach(key => {
+      if (filters[key].length > 0) {
+        newFilters[key] = filters[key][0]; // Change this line
+      }
+    });
+    console.log("Submitting filters:", newFilters);
+    onFilter(newFilters);
   };
 
   const clearFilters = () => {
@@ -56,12 +63,7 @@ export default function FilterForm({ onFilter }) {
       plan_type: [],
       plan_name_full: []
     });
-    onFilter({
-      hmo_name: [],
-      plan_price_range: [],
-      plan_type: [],
-      plan_name_full: []
-    });
+    onFilter({}); // Clear filters in the parent component
   };
 
   const renderCheckboxGroup = (name, options, label) => (
