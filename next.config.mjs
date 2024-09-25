@@ -1,10 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-  },
-};
+  reactStrictMode: true,
+  // Remove the experimental.appDir option as it's no longer needed in newer Next.js versions
+}
 
 export default nextConfig;
