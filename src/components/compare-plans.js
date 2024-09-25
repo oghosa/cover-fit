@@ -73,19 +73,11 @@ export function ComparePlans({ userId }) {
   }, [currentPage, filters]);
 
   if (isLoading) {
-    console.log("Home: isLoading is true, rendering loading message");
     return <div className="flex items-center justify-center min-h-screen">Loading Filter options...</div>;
   }
 
-  console.log("Home: isLoading is false, rendering content");
   return (
     <div className="min-h-screen bg-[#F7F7F7]">
-      <header className="bg-[#008751] text-white p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold hover:text-gray-200">CoverFit</Link>
-          <UserButton afterSignOutUrl="/" />
-        </div>
-      </header>
       <main className="container mx-auto p-4">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold text-[#008751]">Compare Health Insurance Plans</h1>
