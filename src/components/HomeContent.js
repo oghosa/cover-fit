@@ -47,11 +47,6 @@ export default function HomeContent() {
         </Link>
       </main>
 
-      <footer className="bg-gray-100 py-4">
-        <div className="container mx-auto text-center text-gray-600">
-          © 2024 CoverFit. All rights reserved.
-        </div>
-      </footer>
     </div>
   );
 }
