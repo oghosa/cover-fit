@@ -1,10 +1,19 @@
 "use client";
 
 import Link from 'next/link';
-import { UserButton } from "@clerk/nextjs";
-import { useEffect } from 'react';
+import { UserButton, useAuth } from "@clerk/nextjs";
+import { useEffect, useState } from 'react';
 
 export default function HomeContent() {
+  const { isLoaded, userId, isSignedIn } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    if (isLoaded) {
+      setIsAuthenticated(!!userId);
+    }
+  }, [isLoaded, userId, isSignedIn]);
+
   useEffect(() => {
     // Function to remove sign-in and sign-up buttons
     const removeAuthButtons = () => {
@@ -41,12 +50,17 @@ export default function HomeContent() {
         <p className="text-xl mb-8 max-w-2xl">
           Easily compare multiple HMOs, view top-rated plans, and make informed decisions about your health insurance coverage.
         </p>
-
-        <Link href="/compare-plans" className="bg-[#008751] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#006741] transition-colors">
-          Compare Plans
-        </Link>
+        <div className="flex space-x-4">
+          <Link href="/compare-plans" className="bg-[#008751] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#006741] transition-colors">
+            Compare Plans
+          </Link>
+          {isAuthenticated && (
+            <Link href="/top-plans" className="bg-[#008751] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#006741] transition-colors">
+              View Top Plans
+            </Link>
+          )}
+        </div>
       </main>
-
     </div>
   );
 }

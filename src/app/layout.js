@@ -6,8 +6,9 @@ import { Analytics } from '@vercel/analytics/react';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'CoverFit',
-  description: 'Compare Health Insurance Plans Across Nigeria',
+  title: 'CoverFit | Compare Health Insurance Plans in Nigeria',
+  description: 'Compare health insurance plans from multiple HMOs across Nigeria. Find the best coverage for your needs with CoverFit.',
+  keywords: 'health insurance, Nigeria, HMO, compare plans, medical coverage, top plans',
 };
 
 export default function RootLayout({ children }) {
