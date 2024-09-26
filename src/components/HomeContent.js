@@ -15,7 +15,7 @@ export default function HomeContent() {
     if (isLoaded) {
       setIsAuthenticated(!!userId);
       if (userId) {
-        router.push('/dashboard');
+        router.push('/');
       }
     }
   }, [isLoaded, userId, isSignedIn, router]);
@@ -36,14 +36,9 @@ export default function HomeContent() {
           Easily compare multiple HMOs, view top-rated plans, and make informed decisions about your health insurance coverage.
         </p>
         <div className="flex space-x-4">
-          <Link href="/compare-plans" className="bg-[#008751] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#006741] transition-colors">
-            Compare Plans
+          <Link href="/dashboard" className="bg-[#008751] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#006741] transition-colors">
+            Get Started
           </Link>
-          {isAuthenticated && (
-            <Link href="/top-plans" className="bg-[#008751] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#006741] transition-colors">
-              View Top Plans
-            </Link>
-          )}
         </div>
       </main>
     </div>

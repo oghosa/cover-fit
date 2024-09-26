@@ -47,18 +47,18 @@ export default function TopPlans() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {topPlans.map((plan, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+          <div key={index} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col">
             <div className="bg-gray-100 p-4">
               <h2 className="text-xl font-bold text-gray-800">{plan.plan_name}</h2>
             </div>
-            <div className="p-6">
+            <div className="p-6 flex flex-col flex-grow">
               <p className="text-lg mb-2 text-gray-700">{plan.hmo_name}</p>
               <p className="text-sm text-gray-600 mb-2">Type: {plan.plan_type}</p>
               <p className="text-2xl font-bold mb-4 text-[#008751]">
                 ₦{plan.plan_annual_cost_naira}
               </p>
               <Button 
-                className="w-full bg-[#008751] text-white hover:bg-[#006741] transition-colors duration-300" 
+                className="w-full bg-[#008751] text-white hover:bg-[#006741] transition-colors duration-300 mt-auto" 
                 onClick={() => window.open(plan.plan_link, '_blank')}
               >
                 View Plan Details
