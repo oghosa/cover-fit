@@ -27,7 +27,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex flex-col">
       <Header />
-      <UserDashboard userName={userName} />
+      <UserDashboard />
     </div>
   );
 }
