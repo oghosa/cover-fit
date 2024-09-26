@@ -33,7 +33,6 @@ export default function Header() {
       <div className="relative" ref={dropdownRef}>
         {isLoaded && userId ? (
           <div className="flex items-center">
-            <span className="mr-2">{user?.firstName || user?.username || 'User'}</span>
             <UserButton />
             <button onClick={toggleDropdown} className="ml-2">
               <ChevronDown size={24} />
