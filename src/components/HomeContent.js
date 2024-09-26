@@ -3,45 +3,30 @@
 import Link from 'next/link';
 import { UserButton, useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Header from '@/components/Header';
 
 export default function HomeContent() {
   const { isLoaded, userId, isSignedIn } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (isLoaded) {
       setIsAuthenticated(!!userId);
+      if (userId) {
+        router.push('/dashboard');
+      }
     }
-  }, [isLoaded, userId, isSignedIn]);
+  }, [isLoaded, userId, isSignedIn, router]);
 
-  useEffect(() => {
-    // Function to remove sign-in and sign-up buttons
-    const removeAuthButtons = () => {
-      const signInButton = document.querySelector('a[href="/sign-in"]');
-      const signUpButton = document.querySelector('a[href="/sign-up"]');
-      if (signInButton) signInButton.remove();
-      if (signUpButton) signUpButton.remove();
-    };
-
-    // Call the function immediately
-    removeAuthButtons();
-
-    // Set up a MutationObserver to watch for changes in the DOM
-    const observer = new MutationObserver(removeAuthButtons);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // Cleanup function to disconnect the observer when the component unmounts
-    return () => observer.disconnect();
-  }, []);
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex flex-col">
-      <header className="bg-[#008751] text-white p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold hover:text-gray-200">CoverFit</Link>
-          <UserButton afterSignOutUrl="/" />
-        </div>
-      </header>
+      <Header />
 
       <main className="flex-grow container mx-auto px-4 py-8 flex flex-col items-center justify-center text-center">
         <h1 className="text-4xl font-bold text-[#008751] mb-4">

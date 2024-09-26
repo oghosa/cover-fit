@@ -10,7 +10,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (isLoaded && userId) {
-      router.replace("/compare-plans");
+      router.replace("/dashboard");
     }
   }, [isLoaded, userId, router]);
 
@@ -19,12 +19,12 @@ export default function SignInPage() {
   }
 
   if (userId) {
-    return <div>Redirecting to compare plans...</div>;
+    return <div>Redirecting to dashboard...</div>;
   }
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex flex-col items-center justify-center">
-      <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" afterSignInUrl="/compare-plans" />
+      <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" afterSignInUrl="/dashboard" />
     </div>
   );
 }
