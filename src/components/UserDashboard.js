@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart2, Award, FileSearch, ChevronRight } from 'lucide-react';
 
-export default function UserDashboard({ userName }) {
+export default function UserDashboard() {
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold text-[#008751] mb-8">Welcome</h1>

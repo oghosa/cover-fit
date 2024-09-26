@@ -6,7 +6,7 @@ import { UserButton, useAuth } from "@clerk/nextjs";
 import { ChevronDown } from 'lucide-react';
 
 export default function Header() {
-  const { isLoaded, userId, user } = useAuth();
+  const { isLoaded, userId } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
