@@ -29,7 +29,8 @@ async function seedDatabase() {
         Plan_Last_Updated DATE,
         Plan_Price_Range VARCHAR(255),
         Plan_Type VARCHAR(255),
-        Plan_Name_Full VARCHAR(255)
+        Plan_Name_Full VARCHAR(255),
+        Is_CoverFit_Best VARCHAR(255)
       )
     `;
     console.log('Created new plans table');

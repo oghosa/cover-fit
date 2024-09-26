@@ -40,7 +40,8 @@ export async function POST(request) {
             Plan_Last_Updated,
             Plan_Price_Range,
             Plan_Type,
-            Plan_Name_Full
+            Plan_Name_Full,
+            Is_CoverFit_Best
           ) VALUES (
             ${record.Plan_id || null},
             ${record.HMO_id || null},
@@ -55,7 +56,8 @@ export async function POST(request) {
             ${record.Plan_Last_Updated || null},
             ${record.Plan_Price_Range || ''},
             ${record.Plan_Type || ''},
-            ${record.Plan_Name_Full || ''}
+            ${record.Plan_Name_Full || ''},
+            ${record.Is_CoverFit_Best || ''}
           )
           ON CONFLICT (Plan_id)
           DO UPDATE SET
@@ -71,7 +73,8 @@ export async function POST(request) {
             Plan_Last_Updated = EXCLUDED.Plan_Last_Updated,
             Plan_Price_Range = EXCLUDED.Plan_Price_Range,
             Plan_Type = EXCLUDED.Plan_Type,
-            Plan_Name_Full = EXCLUDED.Plan_Name_Full
+            Plan_Name_Full = EXCLUDED.Plan_Name_Full,
+            Is_CoverFit_Best = EXCLUDED.Is_CoverFit_Best
         `;
         console.log(`Processed record ${index + 1}`);
       } catch (insertError) {
