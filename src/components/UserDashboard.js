@@ -32,7 +32,7 @@ export default function UserDashboard() {
           </CardHeader>
           <CardContent className="flex flex-col flex-grow">
             <p className="text-sm text-gray-600 mb-4 flex-grow">
-              See CoverFit's top 5 rated HMO plans
+              See CoverFit's top 5 HMO plans
             </p>
             <Link href="/top-plans" passHref>
               <Button className="w-full bg-[#008751] text-white hover:bg-[#006741] mt-auto">
