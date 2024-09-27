@@ -1,6 +1,7 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
+  console.log('Custom _document.js is being used');
   return (
     <Html lang="en">
       <Head>
