@@ -4,7 +4,6 @@ import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { CompareHMOs } from '@/components/CompareHMOs';
-import Header from '@/components/Header';
 
 export default function CompareHMOsPage() {
   const { isLoaded, userId } = useAuth();
@@ -22,7 +21,6 @@ export default function CompareHMOsPage() {
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex flex-col">
-      <Header />
       <CompareHMOs />
     </div>
   );

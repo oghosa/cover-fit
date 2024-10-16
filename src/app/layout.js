@@ -2,6 +2,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Analytics } from '@vercel/analytics/react';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Script from 'next/script';
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
           />
         </head>
         <body className="flex flex-col min-h-screen">
+          <Header />
           <main className="flex-grow">
             {children}
           </main>

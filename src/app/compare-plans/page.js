@@ -4,7 +4,6 @@ import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { ComparePlans } from '@/components/compare-plans';
-import Header from '@/components/Header';
 
 export default function ComparePlansPage() {
   const { isLoaded, userId } = useAuth();
@@ -22,7 +21,6 @@ export default function ComparePlansPage() {
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex flex-col">
-      <Header />
       <ComparePlans userId={userId} />
     </div>
   );

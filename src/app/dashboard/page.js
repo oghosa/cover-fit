@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import UserDashboard from '@/components/UserDashboard';
 import Link from 'next/link';
-import Header from '@/components/Header';
 
 export default function DashboardPage() {
   const { isLoaded, userId, user } = useAuth();
@@ -26,7 +25,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex flex-col">
-      <Header />
       <UserDashboard />
     </div>
   );
