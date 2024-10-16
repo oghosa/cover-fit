@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from 'react';
+import { HmoDetailsPopup } from './hmo-details-popup';
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 
@@ -51,19 +50,19 @@ export default function HMOsTable({ hmos }) {
                       View Details
                     </button>
                   </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>{selectedHMO?.hmo_name}</DialogTitle>
-                    </DialogHeader>
-                    <div className="mt-4">
-                      <p><strong>Category:</strong> {selectedHMO?.hmo_category}</p>
-                      <p><strong>Email:</strong> {selectedHMO?.hmo_email}</p>
-                      <p><strong>Phone:</strong> {selectedHMO?.hmo_phone_number}</p>
-                      <p><strong>Address:</strong> {selectedHMO?.hmo_address}</p>
-                      <p><strong>Providers Link:</strong> <a href={selectedHMO?.hmo_providers_link} target="_blank" rel="noopener noreferrer" className="text-[#008751] hover:text-[#006741] font-medium">View Providers</a></p>
-                      <p><strong>Provider Count Estimate:</strong> {selectedHMO?.hmo_provider_count_estimate}</p>
-                      <p><strong>Last Updated:</strong> {selectedHMO?.hmo_last_updated}</p>
-                    </div>
+                  <DialogContent className="p-0 border-none max-w-2xl bg-transparent shadow-none" closeButton={false}>
+                    <HmoDetailsPopup
+                      hmo={{
+                        name: hmo.hmo_name,
+                        category: hmo.hmo_category,
+                        email: hmo.hmo_email,
+                        phone: hmo.hmo_phone_number,
+                        address: hmo.hmo_address,
+                        providersLink: hmo.hmo_providers_link,
+                        providerCount: hmo.hmo_provider_count_estimate,
+                        lastUpdated: hmo.hmo_last_updated
+                      }}
+                    />
                   </DialogContent>
                 </Dialog>
               </td>
