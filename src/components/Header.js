@@ -40,6 +40,7 @@ export default function Header() {
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-lg shadow-lg z-10 top-full">
                 <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-200">Dashboard</Link>
+                <Link href="/blog" className="block px-4 py-2 hover:bg-gray-200">Blog</Link>
               </div>
             )}
           </div>
