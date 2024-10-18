@@ -1,39 +1,23 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
-export default function BlogPost({ params }) {
-  const [post, setPost] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { slug } = params;
+async function getBlogPost(slug) {
+  const res = await fetch(`https://vqo.ttt.mybluehost.me/website_232add02/wp-json/wp/v2/posts?slug=${slug}`, { next: { revalidate: 60 } });
+  if (!res.ok) {
+    throw new Error('Failed to fetch blog post');
+  }
+  const posts = await res.json();
+  return posts[0] || null;
+}
 
-  useEffect(() => {
-    fetchPost();
-  }, [slug]);
+export default async function BlogPost({ params }) {
+  const post = await getBlogPost(params.slug);
 
-  const fetchPost = async () => {
-    try {
-      const response = await fetch(`https://vqo.ttt.mybluehost.me/website_232add02/wp-json/wp/v2/posts?slug=${slug}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setPost(data[0]);
-    } catch (error) {
-      console.error('Error fetching blog post:', error);
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  if (!post) {
+    notFound();
+  }
 
-  if (isLoading) return <div>Loading blog post...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!post) return <div>Blog post not found</div>;
-
-  // Format the date
   const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
